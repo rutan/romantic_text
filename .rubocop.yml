@@ -1,0 +1,35 @@
+AllCops:
+  Exclude:
+    - tmp/**/*
+    - vendor/**/*
+  TargetRubyVersion: 2.5
+  DisplayCopNames: true
+
+# no romantic :(
+Style/Alias:
+  Enabled: false
+
+# no document
+Style/Documentation:
+  Enabled: false
+
+# incompatible DSL
+Layout/EmptyLinesAroundArguments:
+  Enabled: false
+
+# incompatible DSL
+Metrics/BlockLength:
+  Enabled: false
+
+# incompatible DSL
+Metrics/ClassLength:
+  Exclude:
+    - test/**/*
+
+# my preference :)
+Metrics/LineLength:
+  Max: 120
+
+# my preference :(
+Metrics/MethodLength:
+  Max: 20
