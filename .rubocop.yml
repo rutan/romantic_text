@@ -33,3 +33,9 @@ Metrics/LineLength:
 # my preference :(
 Metrics/MethodLength:
   Max: 20
+
+# bye :)
+Naming/BinaryOperatorParameterName:
+  Enabled: false
+Lint/MultipleCompare:
+  Enabled: false

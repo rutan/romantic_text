@@ -152,5 +152,20 @@ class RomanticTextTest < Test::Unit::TestCase
 
       assert { html.to_s == '<span><b>big</b></span>' }
     end
+
+    test 'use > syntax' do
+      html1 = RomanticText.markup do
+        `div` > `p` > `span`[class: 'red'] > 'Hello, Syntax'
+      end
+
+      html2 = RomanticText.markup do
+        h('div') > h('p') > h('span', class: 'red') > 'Hello, Syntax'
+      end
+
+      result = '<div><p><span class="red">Hello, Syntax</span></p></div>'
+
+      assert { html1.to_s == result }
+      assert { html2.to_s == result }
+    end
   end
 end

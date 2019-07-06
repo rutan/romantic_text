@@ -25,6 +25,14 @@ module RomanticText
     alias_method :text, :<<
     alias_method :_, :<<
 
+    def >(element_or_str)
+      unless element_or_str.is_a?(Element) || element_or_str.is_a?(HTMLNode)
+        element_or_str = HTMLNode.new(element_or_str)
+      end
+      append_child(element_or_str)
+      element_or_str
+    end
+
     def dangerous_raw_html(str)
       append_child HTMLNode.new(str.to_s)
     end
