@@ -11,6 +11,7 @@
         - [Attributes](#attributes)
         - [Shorthand id / class](#shorthand-id--class)
         - [Escape HTML](#escape-html)
+        - [`>` syntax](#-syntax)
         - [Use `h` method](#use-h-method)
     - [Motivation](#motivation)
     - [Contributing](#contributing)
@@ -108,6 +109,15 @@ html = RomanticText.markup do
   end
 end
 html.to_s # => <div><script>alert(1)</script></div>
+```
+
+### `>` syntax
+
+```ruby
+html = RomanticText.markup do
+  `table` > `tr` > `td`[class: 'red'] > 'item'
+end
+html.to_s # => <table><tr><td class="red">item</td></tr></table>
 ```
 
 ### Use `h` method

@@ -7,10 +7,12 @@ module RomanticText
       @attributes = pick_id_and_classes(subject)
       merge_attributes!(attributes)
       @children = []
+      @parent = nil
     end
+    attr_accessor :parent
 
     def `(name)
-      Element.new(name).tap { |e| @children.push(e) }
+      Element.new(name).tap { |e| append_child(e) }
     end
 
     def h(name, attributes = {}, &block)
@@ -18,13 +20,21 @@ module RomanticText
     end
 
     def <<(str)
-      @children.push Utils.escape(str)
+      append_child HTMLNode.new(Utils.escape(str))
     end
     alias_method :text, :<<
     alias_method :_, :<<
 
+    def >(element_or_str)
+      unless element_or_str.is_a?(Element) || element_or_str.is_a?(HTMLNode)
+        element_or_str = HTMLNode.new(element_or_str)
+      end
+      append_child(element_or_str)
+      element_or_str
+    end
+
     def dangerous_raw_html(str)
-      @children.push str.to_s
+      append_child HTMLNode.new(str.to_s)
     end
 
     def render(attributes = {}, &block)
@@ -39,6 +49,19 @@ module RomanticText
       return inner if @name.nil?
 
       generate_tag(@name, @attributes, inner)
+    end
+
+    def append_child(element)
+      element.parent&.remove_child(element)
+      element.parent = self
+      @children.push(element)
+    end
+
+    def remove_child(element)
+      return unless @children.include?(element)
+
+      element.parent = nil
+      @children.delete(element)
     end
 
     private
